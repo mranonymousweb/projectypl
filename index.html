@@ -240,8 +240,18 @@
                 return;
             }
 
-            const monthlyRate = brandRate / 12; // نرخ بهره ماهانه
-            const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n)); // فرمول محاسبه قسط
+            // محاسبه درصدها
+            const firstHalfRate = 0.05; // 5% برای نیمه اول
+            const secondHalfRate = 0.24; // 24% برای نیمه دوم
+            const finalRepaymentRate = 0.23; // 23% برای بازپرداخت نهایی
+
+            const monthlyRateFirstHalf = firstHalfRate / 12; // نرخ بهره ماهانه نیمه اول
+            const monthlyRateSecondHalf = secondHalfRate / 12; // نرخ بهره ماهانه نیمه دوم
+            const monthlyRateFinalRepayment = finalRepaymentRate / 12; // نرخ بهره ماهانه بازپرداخت نهایی
+
+            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12)); // محاسبه قسط نیمه اول
+            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12)); // محاسبه قسط نیمه دوم
+            const totalPayment = (monthlyPaymentFirstHalf * 12) + (monthlyPaymentSecondHalf * 12); // کل پرداختی
 
             // محاسبه کارمزد 9 درصد
             const feeRate = 0.09; // کارمزد 9 درصد
@@ -251,18 +261,14 @@
             const depositRate = 0.08; // سپرده نقدی 8 درصد
             const depositAmount = amount * depositRate; // سپرده نقدی
 
-            const finalRepayment = (monthlyPayment * n) + totalFee; // بازپرداخت نهایی
-
-            const firstHalfPayment = monthlyPayment * Math.ceil(n / 2);
-            const secondHalfPayment = monthlyPayment * Math.floor(n / 2);
+            const finalRepayment = totalPayment + totalFee; // بازپرداخت نهایی
 
             document.getElementById("result").innerHTML = `
-                <p>اقساط نیمه اول: ${firstHalfPayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
-                <p>اقساط نیمه دوم: ${secondHalfPayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
+                <p>اقساط نیمه اول (12 ماه اول): ${monthlyPaymentFirstHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
+                <p>اقساط نیمه دوم (12 ماه دوم): ${monthlyPaymentSecondHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>سپرده نقدی: ${depositAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>کارمزد: ${totalFee.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>بازپرداخت نهایی: ${finalRepayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
-                <p>مبلغ قسط ماهیانه: ${monthlyPayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
             `;
         }
     </script>
