@@ -182,14 +182,12 @@
     </style>
 </head>
 
-<body>
-
     <div class="container">
         <div>
             <h1>محاسبه اقساط</h1>
 
             <div class="form-group">
-                <label for="requestedAmount">مبلغ درخواستی :</label>
+                <label for="requestedAmount">مبلغ درخواستی (۵ میلیون تا ۱۲۰ میلیون):</label>
                 <input class="slider-fu" type="range" id="amountSlider" min="5000000" max="120000000" step="5000000"
                     value="5000000" oninput="updateAmount()">
                 <div class="slider-value" id="sliderValue">۵,۰۰۰,۰۰۰ تومان</div>
@@ -210,9 +208,17 @@
             <div class="form-group">
                 <label for="brand">انتخاب برند:</label>
                 <select id="brand" onchange="calculate()">
-                    <option value="14">پاکشوما (14%)</option>
-                    <option value="20">مادیران (20%)</option>
-                    <option value="24">گلدیران (24%)</option>
+                    <option value="پاکشوما">پاکشوما</option>
+                    <option value="مادیران">مادیران</option>
+                    <option value="بلانتون">بلانتون</option>
+                    <option value="گلدیران">گلدیران</option>
+                    <option value="کلور">کلور</option>
+                    <option value="دیپوینت">دیپوینت</option>
+                    <option value="یوروپلاس">یوروپلاس</option>
+                    <option value="لایف">لایف</option>
+                    <option value="سام">سام</option>
+                    <option value="تاکنو">تاکنو</option>
+                    <option value="جی سان">جی سان</option>
                 </select>
             </div>
 
@@ -223,6 +229,20 @@
     </div>
 
     <script>
+        const rates = {
+            "پاکشوما": { firstHalf: 0.05, secondHalf: 0.24, finalRepayment: 0.23 },
+            "مادیران": { firstHalf: 0.23, secondHalf: 0.24, finalRepayment: 0.23 },
+            "بلانتون": { firstHalf: 0.12, secondHalf: 0.24, finalRepayment: 0.23 },
+            "گلدیران": { firstHalf: 0.23, secondHalf: 0.24, finalRepayment: 0.23 },
+            "کلور": { firstHalf: 0.11, secondHalf: 0.24, finalRepayment: 0.23 },
+            "دیپوینت": { firstHalf: 0.12, secondHalf: 0.24, finalRepayment: 0.23 },
+            "یوروپلاس": { firstHalf: 0.14, secondHalf: 0.24, finalRepayment: 0.23 },
+            "لایف": { firstHalf: 0.06, secondHalf: 0.24, finalRepayment: 0.23 },
+            "سام": { firstHalf: 0.16, secondHalf: 0.24, finalRepayment: 0.23 },
+            "تاکنو": { firstHalf: 0.23, secondHalf: 0.24, finalRepayment: 0.23 },
+            "جی سان": { firstHalf: 0.16, secondHalf: 0.24, finalRepayment: 0.23 },
+        };
+
         function updateAmount() {
             const slider = document.getElementById("amountSlider");
             const amount = slider.value;
@@ -233,7 +253,7 @@
 
         function calculate() {
             const amount = parseFloat(document.getElementById("requestedAmount").value);
-            const brandRate = parseFloat(document.getElementById("brand").value) / 100; // نرخ بهره سالانه
+            const brand = document.getElementById("brand").value;
             const n = parseInt(document.getElementById("duration").value); // تعداد اقساط
 
             if (isNaN(amount) || amount <= 0 || n <= 0) {
@@ -241,14 +261,11 @@
                 return;
             }
 
-            // محاسبه درصدها
-            const firstHalfRate = 0.05; // 5% برای نیمه اول
-            const secondHalfRate = 0.24; // 24% برای نیمه دوم
-            const finalRepaymentRate = 0.23; // 23% برای بازپرداخت نهایی
+            const { firstHalf, secondHalf, finalRepayment } = rates[brand];
 
-            const monthlyRateFirstHalf = firstHalfRate / 12; // نرخ بهره ماهانه نیمه اول
-            const monthlyRateSecondHalf = secondHalfRate / 12; // نرخ بهره ماهانه نیمه دوم
-            const monthlyRateFinalRepayment = finalRepaymentRate / 12; // نرخ بهره ماهانه بازپرداخت نهایی
+            const monthlyRateFirstHalf = firstHalf / 12; // نرخ بهره ماهانه نیمه اول
+            const monthlyRateSecondHalf = secondHalf / 12; // نرخ بهره ماهانه نیمه دوم
+            const monthlyRateFinalRepayment = finalRepayment / 12; // نرخ بهره ماهانه بازپرداخت نهایی
 
             const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12)); // محاسبه قسط نیمه اول
             const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12)); // محاسبه قسط نیمه دوم
@@ -262,14 +279,14 @@
             const depositRate = 0.08; // سپرده نقدی 8 درصد
             const depositAmount = amount * depositRate; // سپرده نقدی
 
-            const finalRepayment = totalPayment + totalFee; // بازپرداخت نهایی
+            const finalRepaymentAmount = totalPayment + totalFee; // بازپرداخت نهایی
 
             document.getElementById("result").innerHTML = `
                 <p>اقساط نیمه اول (12 ماه اول): ${monthlyPaymentFirstHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>اقساط نیمه دوم (12 ماه دوم): ${monthlyPaymentSecondHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>سپرده نقدی: ${depositAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>کارمزد: ${totalFee.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
-                <p>بازپرداخت نهایی: ${finalRepayment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
+                <p>بازپرداخت نهایی: ${finalRepaymentAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
             `;
         }
     </script>
