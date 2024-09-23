@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+
         body {
             font-family: 'Vazir', sans-serif;
             direction: rtl;
@@ -37,7 +38,8 @@
 
         .form-group {
             margin-bottom: 20px;
-            width: 48%; /* Adjust width for form groups */
+            width: 48%;
+            /* Adjust width for form groups */
         }
 
         label {
@@ -48,7 +50,7 @@
             width: 100%;
         }
 
-        input[type="number"]{
+        input[type="number"] {
             width: 330px;
             padding: 12px;
             margin-top: 5px;
@@ -60,7 +62,7 @@
             transition: 0.5s;
         }
 
-        select{
+        select {
             width: 360px;
             padding: 12px;
             margin-top: 5px;
@@ -71,7 +73,7 @@
             color: #0d0c22;
             transition: 0.5s;
         }
-        
+
         input[type="range"] {
             width: 350px;
             margin-top: 5px;
@@ -122,10 +124,11 @@
             color: #505050;
             line-height: 1.5;
             background-color: #f8fafc;
-            width: 48%; /* Adjust width for results */
+            width: 48%;
+            /* Adjust width for results */
         }
 
-        .result p{
+        .result p {
             background-color: rgba(255, 255, 255, 0.662);
             padding: 15px 20px;
             border-radius: 25px;
@@ -133,7 +136,7 @@
             transition: 0.3s;
         }
 
-        .result p:active{
+        .result p:active {
             box-shadow: none;
             transition: 0.3s;
         }
@@ -180,7 +183,8 @@
             cursor: pointer;
         }
     </style>
-</head>
+
+<body>
 
     <div class="container">
         <div>
@@ -261,30 +265,28 @@
                 return;
             }
 
-            const { firstHalf, secondHalf, finalRepayment } = rates[brand];
+            const { firstHalf, secondHalf } = rates[brand];
 
             const monthlyRateFirstHalf = firstHalf / 12; // نرخ بهره ماهانه نیمه اول
             const monthlyRateSecondHalf = secondHalf / 12; // نرخ بهره ماهانه نیمه دوم
-            const monthlyRateFinalRepayment = finalRepayment / 12; // نرخ بهره ماهانه بازپرداخت نهایی
+            // محاسبه قسط نیمه اول
+            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12));
+            // محاسبه قسط نیمه دوم
+            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12));
 
-            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12)); // محاسبه قسط نیمه اول
-            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12)); // محاسبه قسط نیمه دوم
-            const totalPayment = (monthlyPaymentFirstHalf * 12) + (monthlyPaymentSecondHalf * 12); // کل پرداختی
+            // محاسبه کل پرداختی
+            const totalPayment = (monthlyPaymentFirstHalf * 12) ;
 
             // محاسبه کارمزد 9 درصد
             const feeRate = 0.09; // کارمزد 9 درصد
             const totalFee = amount * feeRate; // کل کارمزد
 
-            // محاسبه سپرده نقدی 8 درصد
-            const depositRate = 0.08; // سپرده نقدی 8 درصد
-            const depositAmount = amount * depositRate; // سپرده نقدی
-
+            // محاسبه بازپرداخت نهایی
             const finalRepaymentAmount = totalPayment + totalFee; // بازپرداخت نهایی
 
             document.getElementById("result").innerHTML = `
                 <p>اقساط نیمه اول (12 ماه اول): ${monthlyPaymentFirstHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>اقساط نیمه دوم (12 ماه دوم): ${monthlyPaymentSecondHalf.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
-                <p>سپرده نقدی: ${depositAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>کارمزد: ${totalFee.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
                 <p>بازپرداخت نهایی: ${finalRepaymentAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} تومان</p>
             `;
