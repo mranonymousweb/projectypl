@@ -1,0 +1,175 @@
+@import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+
+body {
+    font-family: 'Vazir', sans-serif;
+    direction: rtl;
+    padding: 20px;
+    background-color: #f4f7fa;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h1 {
+    text-align: center;
+    color: #844caf;
+    margin-bottom: 20px;
+    font-size: 24px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 48%;
+    /* Adjust width for form groups */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+    width: 100%;
+}
+
+input[type="number"] {
+    width: 330px;
+    padding: 12px;
+    margin-top: 5px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    background-color: #f8fafc;
+    color: #0d0c22;
+    transition: 0.5s;
+}
+
+select {
+    width: 360px;
+    padding: 12px;
+    margin-top: 5px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    background-color: #f8fafc;
+    color: #0d0c22;
+    transition: 0.5s;
+}
+
+input[type="range"] {
+    width: 350px;
+    margin-top: 5px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    outline: none;
+    background-color: #f8fafc;
+    color: #0d0c22;
+    transition: 0.5s;
+}
+
+input[type="number"]::placeholder {
+    color: #94a3b8;
+}
+
+input[type="number"]:focus,
+select:focus,
+input[type="range"]:focus {
+    border-color: rgba(129, 140, 248);
+    background-color: #fff;
+    box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+    transition: 0.5s;
+}
+
+button {
+    width: 100%;
+    background-color: #6b4caf;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #5345a0;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #c7bef5;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #505050;
+    line-height: 1.5;
+    background-color: #f8fafc;
+    width: 48%;
+    /* Adjust width for results */
+}
+
+.result p {
+    background-color: rgba(255, 255, 255, 0.662);
+    padding: 15px 20px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 2px #2727272f;
+    transition: 0.3s;
+}
+
+.result p:active {
+    box-shadow: none;
+    transition: 0.3s;
+}
+
+.slider {
+    margin-top: 10px;
+}
+
+.slider-value {
+    text-align: center;
+    font-weight: bold;
+    color: #6b4caf;
+}
+
+.slider-fu {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider-fu::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #4c00ff;
+    cursor: pointer;
+}
+
+.slider-fu::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    cursor: pointer;
+}
