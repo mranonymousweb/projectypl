@@ -55,8 +55,8 @@ function calculate() {
     const finalRepaymentAmount = totalPayment + totalFee; // بازپرداخت نهایی
 
     document.getElementById("result").innerHTML = `
-        <p>اقساط نیمه اول (12 ماه اول): ${Math.round(monthlyPaymentFirstHalf).toLocaleString()} تومان</p>
-        <p>اقساط نیمه دوم (12 ماه دوم): ${Math.round(monthlyPaymentSecondHalf).toLocaleString()} تومان</p>
+        <p>مبلغ اقساط نیمه اول (12 ماه اول): ${Math.round(monthlyPaymentFirstHalf).toLocaleString()} تومان</p>
+        <p>مبلغ اقساط نیمه دوم (12 ماه دوم): ${Math.round(monthlyPaymentSecondHalf).toLocaleString()} تومان</p>
         <p>کارمزد: ${Math.round(totalFee).toLocaleString()} تومان</p>
         <p>بازپرداخت نهایی: ${Math.round(finalRepaymentAmount).toLocaleString()} تومان</p>
     `;
