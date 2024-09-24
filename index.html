@@ -232,7 +232,7 @@
         <div class="result" id="result"></div>
     </div>
 
-    <script>
+<script>
         const rates = {
             "پاکشوما": { firstHalf: 0.05, secondHalf: 0.24, finalRepayment: 0.23 },
             "مادیران": { firstHalf: 0.23, secondHalf: 0.24, finalRepayment: 0.23 },
@@ -271,13 +271,13 @@
     
             const { firstHalf, secondHalf } = rates[brand];
     
-            const monthlyRateFirstHalf = firstHalf / 24; // نرخ بهره ماهانه نیمه اول
-            const monthlyRateSecondHalf = secondHalf / 24; // نرخ بهره ماهانه نیمه دوم
+            const monthlyRateFirstHalf = firstHalf / 12; // نرخ بهره ماهانه نیمه اول
+            const monthlyRateSecondHalf = secondHalf / 12; // نرخ بهره ماهانه نیمه دوم
     
             // محاسبه قسط نیمه اول
-            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -22));
+            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12));
             // محاسبه قسط نیمه دوم
-            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -20));
+            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12));
     
             // محاسبه کل پرداختی
             const totalPayment = (monthlyPaymentFirstHalf * 12);
