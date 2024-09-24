@@ -271,13 +271,13 @@
     
             const { firstHalf, secondHalf } = rates[brand];
     
-            const monthlyRateFirstHalf = firstHalf / 12; // نرخ بهره ماهانه نیمه اول
-            const monthlyRateSecondHalf = secondHalf / 12; // نرخ بهره ماهانه نیمه دوم
+            const monthlyRateFirstHalf = firstHalf / 24; // نرخ بهره ماهانه نیمه اول
+            const monthlyRateSecondHalf = secondHalf / 24; // نرخ بهره ماهانه نیمه دوم
     
             // محاسبه قسط نیمه اول
-            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -12));
+            const monthlyPaymentFirstHalf = (amount * monthlyRateFirstHalf) / (1 - Math.pow(1 + monthlyRateFirstHalf, -22));
             // محاسبه قسط نیمه دوم
-            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -12));
+            const monthlyPaymentSecondHalf = (amount * monthlyRateSecondHalf) / (1 - Math.pow(1 + monthlyRateSecondHalf, -20));
     
             // محاسبه کل پرداختی
             const totalPayment = (monthlyPaymentFirstHalf * 12);
@@ -290,13 +290,14 @@
             const finalRepaymentAmount = totalPayment + totalFee; // بازپرداخت نهایی
     
             document.getElementById("result").innerHTML = `
-                <p>مبلغ اقساط نیمه اول (12 ماه اول): ${Math.round(monthlyPaymentFirstHalf).toLocaleString()} تومان</p>
-                <p>مبلغ اقساط نیمه دوم (12 ماه دوم): ${Math.round(monthlyPaymentSecondHalf).toLocaleString()} تومان</p>
+                <p>اقساط نیمه اول (12 ماه اول): ${Math.round(monthlyPaymentFirstHalf).toLocaleString()} تومان</p>
+                <p>اقساط نیمه دوم (12 ماه دوم): ${Math.round(monthlyPaymentSecondHalf).toLocaleString()} تومان</p>
                 <p>کارمزد: ${Math.round(totalFee).toLocaleString()} تومان</p>
                 <p>بازپرداخت نهایی: ${Math.round(finalRepaymentAmount).toLocaleString()} تومان</p>
             `;
         }
     </script>
+    
 
 </body>
 
